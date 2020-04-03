@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
@@ -45,7 +46,7 @@ class Board extends JComponent {
 		
 		if(activePiece.checkCollision(boardBlocks)) {//true if collision
 			activePiece.moveToTab(boardBlocks);
-			System.out.println(activePiece.isLineNull(boardBlocks));
+			activePiece.deleteFullLines(boardBlocks);
 			activePiece = new Piece();
 		//	activePiece.deleteFullLines(boardBlocks);
 		}

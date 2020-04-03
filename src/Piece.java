@@ -111,26 +111,23 @@ public class Piece {
 	}
 
 	public void deleteFullLines(Block[][]tab) {
-		for(int i=0; i< tab.length;++i) {
+		for(int i=0; i< tab[0].length;++i) {
 			System.out.println(i+ " " + isLineFull(tab, i));
 			if(isLineFull(tab, i))
 				deleteLine(tab,i);
 		}
 				}
-//				System.out.print(i + " " + j + "   ");
-			
-//			System.out.print("\n");
-		
+
 	
 	private void deleteLine(Block[][] tab, int which) {
-		for(int i=0; i<0; ++i) {
+		for(int i=0; i<tab.length; ++i) {
 			tab[i][which] = null;
 	}
 	}
 	
 	
 	public Boolean isLineFull(Block[][] tab, int line) {
-		for(int i=0; i<tab[0].length; ++i) {
+		for(int i=0; i<tab.length; ++i) {
 			if(tab[i][line] == null)
 				return false;
 		}
@@ -149,33 +146,4 @@ public class Piece {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-//	public void deleteFullLines(Block[][] tab) {
-//		for (int i = 0; i < tab.length; ++i) {
-//			if (tab[i] != null) {
-//				if (isLineFull(tab[i]))
-//					deleteLine(tab[i]);
-//			System.out.println(isLineFull(tab[][32]));
-//		}
-//		}
-//	}
-//
-//	private Boolean isLineFull(Block[] line) {
-//		for (int i = 0; i < line.length; ++i) {
-//			if (line[i] == null)
-//				return false;
-//		}
-//		return true;
-//	}
-//
-//	private void deleteLine(Block[] tab) {
-//		for (Block b : tab) {
-//			b = null;
-//		}
-//	}
 }

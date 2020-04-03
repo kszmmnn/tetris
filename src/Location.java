@@ -7,4 +7,9 @@ public class Location {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void setLoc(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 }

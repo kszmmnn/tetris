@@ -78,7 +78,7 @@ class Board extends JComponent {
 	}
 
 	public void rotateRight() {
-		// TO DO: rotate the active piece to the right:
+		activePiece = activePiece.rotateR();
 
 
 		repaint();

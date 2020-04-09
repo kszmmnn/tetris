@@ -74,7 +74,7 @@ class Board extends JComponent {
 			if (activePiece.isLineNull(boardBlocks, i) && activePiece.isLineNull(boardBlocks, i+1))
 				for (int j = 0; j < boardBlocks.length; ++j) {
 					if (boardBlocks[j][i] != null) {
-						boardBlocks[j][i].loc.y s;
+						boardBlocks[j][i].loc.y s	;
 					}
 					System.out.println("dupa");
 				}

@@ -9,7 +9,6 @@ import javax.swing.Timer;
 class Tetris {
 
 	private static void createAndShowGUI() {
-		//Create and set up the window.
 		JFrame frame = new JFrame("tetris");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -17,12 +16,10 @@ class Tetris {
 
 		frame.getContentPane().add(board);
 
-		//Display the window.
-		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);
 
-		Timer timer = new Timer(80, new ActionListener() {
+		Timer timer = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				board.nextTurn();
 			}

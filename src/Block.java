@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-class Block {
+class Block implements Cloneable{
 
 	public int colorIndex;
 	public Location loc;
@@ -28,5 +28,11 @@ class Block {
 		g.drawLine(x1 - 1, y1 - 1, x2 - 1, y1 - 1);
 		g.drawLine(x2 - 1, y1 - 1, x2 - 1, y2 - 1);
 		g.drawLine(x1 - 1, y2 - 1, x2 - 1, y2 - 1);
+	}
+	
+	@Override
+	public Block clone() {
+		Block b = new Block(this.colorIndex, this.loc.x, this.loc.y);
+		return b;
 	}
 }

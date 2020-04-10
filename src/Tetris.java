@@ -6,20 +6,20 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-class Tetris {
+class Tetris implements Constants {
 
 	private static void createAndShowGUI() {
 		JFrame frame = new JFrame("tetris");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Board board = new Board(16, 32);
+		Board board = new Board(COLS, ROWS);
 
 		frame.getContentPane().add(board);
-
+		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);
 
-		Timer timer = new Timer(100, new ActionListener() {
+		Timer timer = new Timer(200, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				board.nextTurn();
 			}
@@ -33,9 +33,9 @@ class Tetris {
 					board.rotateLeft();
 				} else if (key == KeyEvent.VK_G) {
 					board.rotateRight();
-				} else if (key == KeyEvent.VK_S) {
+				} else if (key == KeyEvent.VK_LEFT) {
 					board.slide(-1);
-				}  else if (key == KeyEvent.VK_F) {
+				}  else if (key == KeyEvent.VK_RIGHT) {
 					board.slide(1);
 				}
 			}

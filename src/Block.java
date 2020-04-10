@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-class Block implements Cloneable{
+class Block implements Cloneable, Constants{
 
 	public int colorIndex;
 	public Location loc;
@@ -16,9 +16,9 @@ class Block implements Cloneable{
 
 	public void draw(Graphics g, int scale) {
 		g.setColor(colors[colorIndex]);
-		int x1 = loc.x * scale + 1;
+		int x1 = loc.getX() * scale + 1+BORDER;
 		int x2 = x1 + scale;
-		int y1 = loc.y * scale + 1;
+		int y1 = loc.getY() * scale + 1+BORDER;
 		int y2 = y1 + scale;
 
 
@@ -32,7 +32,8 @@ class Block implements Cloneable{
 	
 	@Override
 	public Block clone() {
-		Block b = new Block(this.colorIndex, this.loc.x, this.loc.y);
+		Block b = new Block(this.colorIndex, this.loc.getX(), this.loc.getY());
 		return b;
 	}
+	
 }

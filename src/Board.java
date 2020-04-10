@@ -6,53 +6,49 @@ import java.util.Random;
 
 import javax.swing.JComponent;
 
-class Board extends JComponent {
+class Board extends JComponent implements Constants {
 
-	private static final int SCALE = 30; // pixels per square
-
-	private int cols;
-	private int rows;
 	private Piece activePiece;
 	private Block[][] boardBlocks;
 
-	public Board(int cols, int rows) {
+	public Board(int COLS, int ROWS) {
 		super();
-		setPreferredSize(new Dimension(cols * SCALE - 9, rows * SCALE - 9));
+		setPreferredSize(new Dimension(COLS * SCALE, ROWS * SCALE));
+		setMaximumSize(new Dimension(COLS * SCALE, ROWS * SCALE));
+		setMinimumSize(new Dimension(COLS * SCALE, ROWS * SCALE));
 		activePiece = new Piece();
-		boardBlocks = new Block[cols][rows];
+		boardBlocks = new Block[COLS][ROWS];
 	}
-
+	
+	@Override
 	public void paintComponent(Graphics g) {
-		// clear the screen with black
+		super.paintComponent(g);
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
-
+		
 		activePiece.draw(g, SCALE);
-
-		for (Block[] blockColl : boardBlocks) {
-			for (Block block : blockColl) {
-				if (block != null) {
-					block.draw(g, SCALE);
+		
+		for (Block[] blockCol : boardBlocks) {
+			for (Block b : blockCol) {
+				if (b != null) {
+					b.draw(g, SCALE);
 				}
 			}
 		}
-		// showTab();
-
 	}
 
 	public void nextTurn() {
-		showTab();
-		if (activePiece.checkCollision(boardBlocks)) {// true if collision
+		if (activePiece.checkCollision(boardBlocks)) {
 			activePiece.moveToTab(boardBlocks);
-			if (activePiece.deleteFullLines(boardBlocks)) {
+			if (deleteFullLines()) {
+
 				moveLinesDown();
 			}
 			activePiece = new Piece();
 		} else {
 			activePiece.move(0, 1);
 		}
-
-		repaint();
+		this.repaint();
 	}
 
 	public void slide(int dx) {
@@ -69,31 +65,58 @@ class Board extends JComponent {
 		repaint();
 	}
 
-	public void moveLinesDown() {
-		for (int i = boardBlocks[0].length-2; i != 1; --i) {
-			if (activePiece.isLineNull(boardBlocks, i) && activePiece.isLineNull(boardBlocks, i+1))
-				for (int j = 0; j < boardBlocks.length; ++j) {
-					if (boardBlocks[j][i] != null) {
-						boardBlocks[j][i].loc.y s	;
-					}
-					System.out.println("dupa");
-				}
+	private Boolean deleteFullLines() {
+		Boolean ret = false;
+		for (int i = 0; i < ROWS; ++i) {
+			if (isLineFull(i)) {
+				deleteLine(i);
+				ret = true;
+			}
 		}
-		repaint();
+		return ret;
 	}
 
-//	public void moveLinesDown() {
-//		for(int i=0; i<boardBlocks[0].length; ++i) {
-//				if(activePiece.isLineNull(boardBlocks, i))
-//					for(int j=0; j<boardBlocks.length; ++j) {
-//						if(boardBlocks[j][i]!=null) {
-//							boardBlocks[j][i].loc.y++;
-//						}
-//						System.out.println("dupa");				
-//			}
-//		}
-//		repaint();
-//	}
+	private Boolean isLineNull(int line) {
+		for (int i = 0; i < COLS; ++i) {
+			if (boardBlocks[i][line] != null)
+				return false;
+		}
+		return true;
+	}
+
+	private Boolean isLineFull(int line) {
+		for (int i = 0; i < COLS; ++i) {
+			if (boardBlocks[i][line] == null)
+				return false;
+		}
+		return true;
+	}
+
+	private void deleteLine(int line) {
+		for (int i = 0; i < COLS; ++i) {
+			boardBlocks[i][line] = null;
+		}
+	}
+
+	private void moveLinesDown() {
+		for(int i=0; i<ROWS-1; ++i) {
+			if(isLineNull(i+1) && !isLineNull(i)) {
+				moveLine(i);
+				i=0;
+			}
+		}
+	}
+
+	private void moveLine(int line) {
+		for (int i = 0; i < COLS; ++i) {
+			if (boardBlocks[i][line] != null) {
+				boardBlocks[i][line].loc.move(0, 1);
+				boardBlocks[i][line + 1] = boardBlocks[i][line];
+				boardBlocks[i][line] = null;
+
+			}
+		}
+	}
 
 	public void rotateRight() {
 		activePiece = activePiece.rotateR(boardBlocks);
